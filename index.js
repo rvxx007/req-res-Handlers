@@ -1,4 +1,4 @@
-export function resFunc(res,statusCode,success,msg,body){
+function resFunc(res,statusCode,success,msg,body){
     res.status(statusCode).send({
         success: success,
         msg:msg,
@@ -8,10 +8,12 @@ export function resFunc(res,statusCode,success,msg,body){
 
 
 
-export function catchFunc(res,statusCode,msg,body){
+function catchFunc(res,statusCode,msg,body){
     res.status(statusCode).send({
         success: success,
         msg:msg,
-        body:body
+         body:body
     })
 }
+
+export {resFunc,catchFunc}
