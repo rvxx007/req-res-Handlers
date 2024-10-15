@@ -10,7 +10,7 @@ function isRequired(any:any) {
 // success indicate response is successful or not thats why it take boolean value.
 // msg take String type of data for Successful message or error message.
 // body is a object which is use to send json object data as response.
-function resFunc(res,statusCode:number,success:boolean,msg:string,body:object){
+function resFunc(res:any,statusCode:number,success:boolean,msg:string,body:object){
     
     if (typeof statusCode !== 'number') {
         throw new TypeError('statusCode must be a number');
@@ -37,7 +37,7 @@ function resFunc(res,statusCode:number,success:boolean,msg:string,body:object){
 // success by default is false beacause catchFunc use to send Server Error type of response.
 // msg take String type of data for Successful message or error message.
 // error is a object which is use to send error(which we recievied from the catch((error)=>{console.error(error)}) block) object data as response.
-function catchFunc(res,statusCode:number,msg:string,error:object){
+function catchFunc(res:any,statusCode:number,msg:string,error:object){
     
     if (typeof statusCode !== 'number') {
         throw new TypeError('statusCode must be a number');

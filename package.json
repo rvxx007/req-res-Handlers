@@ -1,10 +1,12 @@
 {
   "name": "req-res-handlers",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "",
-  "main": "index.js",
-  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
+    "build": "tsup",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,9 +20,13 @@
     "express"
   ],
   "author": "Akash Kawale",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/rvxx007/req-res-Handlers/issues"
   },
-  "homepage": "https://github.com/rvxx007/req-res-Handlers#readme"
+  "homepage": "https://github.com/rvxx007/req-res-Handlers#readme",
+  "devDependencies": {
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.3"
+  }
 }
