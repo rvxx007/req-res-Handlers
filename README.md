@@ -39,8 +39,6 @@ resFunc(res, 200, true, "Request was successful", { data: "Your data here" });
 - Ensure that the `res` object is a valid response object from your framework.
 - The function can be tailored to suit specific needs by modifying the structure of the `msg` or `body`.
 
-```
-
 
 ## catchFunc
 
