@@ -115,4 +115,4 @@ Contributions are welcome! If you have improvements, please open an issue or sub
 
 ## Author
 
-[Akash Kawale]  
+Akash Kawale  
