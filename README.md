@@ -305,5 +305,5 @@ app.get('/download', (req, res) => {
 
 ## 👤 Author
 
-- [@rvxx007](https://github.com/rvxx007)
-- [akashkawle0@gmail.com](mailto:akashkawle0@gmail.com)
+- [![GitHub](https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg) @rvxx007](https://github.com/rvxx007)
+- [![Gmail](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Gmail_Icon.png/512px-Gmail_Icon.png) akashkawle0@gmail.com](mailto:akashkawle0@gmail.com)
