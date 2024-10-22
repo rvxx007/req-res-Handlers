@@ -96,6 +96,24 @@ app.get('/data', (req, res) => {
 - The error object can contain any relevant information that can help in debugging.
 
 
+## setPublicDirFunc(app, express, dirPath)
+
+Sets up a public directory for serving static files.
+
+### Parameters:
+- `app` (Express app): The Express application instance.
+- `express` (Express module): The Express module (typically imported as `express`).
+- `dirPath` (string, optional): The directory path to serve static files from. Defaults to `'public'`.
+
+### Example:
+```javascript
+const express = require('express');
+const { setPublicDirFunc } = require('req-res-handler');
+const app = express();
+
+setPublicDirFunc(app, express, 'assets');  // Serves static files from 'assets' directory
+
+
 
 ### License
 
@@ -117,4 +135,4 @@ Contributions are welcome! If you have improvements, please open an issue or sub
 
 ## Author
 
-[Akash Kawale]  
+Akash Kawale
