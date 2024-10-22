@@ -1,5 +1,5 @@
 
-![Logo](https://github.com/rvxx007/req-res-Handlers/blob/main/public/logo.jpeg)
+![Logo](https://github.com/rvxx007/req-res-Handlers/blob/main/public/poster.jpeg)
 
 
 # req-res-Handlers
