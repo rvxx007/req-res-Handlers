@@ -169,27 +169,6 @@ function setupBasicMiddlewaresConfig(app:any , express:any, publicDirPath:string
 }
 
 
-/**
- * Sends a file to the client using the specified response object and file path.
- * 
- * @param {res} res - The response object (usually from Express) used to send the file to the client.
- * @param {string} filePath - The relative path to the file that should be sent.
- * 
- * This function constructs the full file path by joining the current directory (`__dirname`) 
- * with the provided `filePath` using the `path.join()` method to ensure compatibility 
- * across different operating systems. It then uses the `res.sendFile()` method to send 
- * the file to the client.
- * 
- * Example usage:
- * 
- *    resSendFileFunc(res, '/files/example.pdf');
- * 
- * In this example, the server will send the `example.pdf` file located in the `/files` directory.
- */
-function resSendFileFunc(res:any,filePath:string ){
-    res.sendFile(path.join(__dirname+filePath));
-}
-
 export {resFunc,
     catchFunc,
     setPublicDirFunc,
@@ -197,4 +176,4 @@ export {resFunc,
     setTemplateEngineFunc,
     setCors,
     setupBasicMiddlewaresConfig,
-    resSendFileFunc}
+    }

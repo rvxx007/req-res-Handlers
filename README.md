@@ -23,10 +23,6 @@
 
 - **🛡️ setupBasicMiddlewaresConfig(app, express, publicDirPath, viewDirPathForTemplateEngine, viewEngineTemplateEngine):** A comprehensive function that sets up multiple essential middleware in one go, ensuring your Express application is configured correctly from the start.
 
-#### 📁 File Response Function:
-
-- **📄resSendFileFunc(res, filePath):** A utility to send files as responses, simplifying the process of delivering static files to clients.
-
 ## 📚 Documentation
 
 [Documentation](https://#)
@@ -51,7 +47,7 @@ setExpressUrlendodedAndJson,
 setTemplateEngineFunc, 
 setCors, 
 setupBasicMiddlewaresConfig, 
-resSendFileFunc } from 'req-res-Handlers'
+ } from 'req-res-Handlers'
 ```
 
 -----
@@ -273,30 +269,7 @@ const app = express();
 
 setupBasicMiddlewaresConfig(app, express, 'assets', 'templates', 'pug');
 ```
------
 
-# 📄 resSendFileFunc
-
------
-
-## Description
-Sends a file to the client using the specified response object and file path.
-
-## Parameters
-- `res` (Response object): The Express response object.
-- `filePath` (string): The relative path to the file that should be sent.
-
-## Example
-
-```javascript
-const express = require('express');
-const { resSendFileFunc } = require('req-res-handler');
-const app = express();
-
-app.get('/download', (req, res) => {
-  resSendFileFunc(res, '/files/example.pdf');  // Sends 'example.pdf' to the client
-});
-```
 
 ## 📜 License
 
