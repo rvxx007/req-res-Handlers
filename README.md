@@ -7,32 +7,32 @@
 **req-res-Handlers** is a versatile npm package designed to simplify the handling of HTTP requests and responses in Express applications. It provides a suite of utility functions that streamline common tasks, enhance error handling, and configure essential middleware, enabling developers to focus on building robust server applications.
 ## Features
 
-#### Response Handling Functions:
+#### ⚙️ Response Handling Functions:
 
-- **resFunc:** A structured method to send JSON responses to clients, ensuring consistency across your API responses.
-- **catchFunc:** An error handling utility that formats error responses, making it easier to communicate issues back to clients.
+- **📝resFunc:** A structured method to send JSON responses to clients, ensuring consistency across your API responses.
+- **❌catchFunc:** An error handling utility that formats error responses, making it easier to communicate issues back to clients.
 
-#### Middleware Setup Functions:
+#### 🛠️ Middleware Setup Functions:
 
-- **setPublicDirFunc(app, express, dirPath):** Configures a public directory to serve static files, enhancing the accessibility of assets in your application.
-- **setExpressUrlencodedAndJson(app, express):** Sets up middleware to parse incoming requests with JSON and URL-encoded payloads, enabling your application to handle various content types seamlessly.
-- **setTemplateEngineFunc(app, viewDirPath, viewEngine):** Configures a templating engine for rendering views, allowing for dynamic content generation based on server-side logic.
-- **setCors(app):** Enables Cross-Origin Resource Sharing (CORS), facilitating cross-origin requests and enhancing the flexibility of your API.
+- **📂 setPublicDirFunc(app, express, dirPath):** Configures a public directory to serve static files, enhancing the accessibility of assets in your application.
+- **🔗 setExpressUrlencodedAndJson(app, express):** Sets up middleware to parse incoming requests with JSON and URL-encoded payloads, enabling your application to handle various content types seamlessly.
+- **🖼️ setTemplateEngineFunc(app, viewDirPath, viewEngine):** Configures a templating engine for rendering views, allowing for dynamic content generation based on server-side logic.
+- **🌐 setCors(app):** Enables Cross-Origin Resource Sharing (CORS), facilitating cross-origin requests and enhancing the flexibility of your API.
 
-#### Basic Middleware Configuration:
+####🔧 Basic Middleware Configuration:
 
-- **setupBasicMiddlewaresConfig(app, express, publicDirPath, viewDirPathForTemplateEngine, viewEngineTemplateEngine):** A comprehensive function that sets up multiple essential middleware in one go, ensuring your Express application is configured correctly from the start.
+- **🛡️ setupBasicMiddlewaresConfig(app, express, publicDirPath, viewDirPathForTemplateEngine, viewEngineTemplateEngine):** A comprehensive function that sets up multiple essential middleware in one go, ensuring your Express application is configured correctly from the start.
 
-#### File Response Function:
+####📁 File Response Function:
 
-- **resSendFileFunc(res, filePath):** A utility to send files as responses, simplifying the process of delivering static files to clients.
+- **📄resSendFileFunc(res, filePath):** A utility to send files as responses, simplifying the process of delivering static files to clients.
 
-## Documentation
+##📚 Documentation
 
-[Documentation](https://linktodocumentation)
+[Documentation](https://#)
 
 
-## Installation
+##📦 Installation
 
 Install Package with npm
 
@@ -40,7 +40,7 @@ Install Package with npm
   npm i req-res-handlers
 ```
     
-## Usage/Examples
+##🚀 Usage/Examples
 
 ```javascript
 import { 
@@ -56,7 +56,7 @@ resSendFileFunc } from 'req-res-Handlers'
 
 -----
 
-## resFunc
+##📝 resFunc
 
 -----
 
@@ -96,11 +96,9 @@ resFunc(res, 200, true, "Request was successful", { data: "Your data here" });
 - Ensure that the `res` object is a valid response object from your framework.
 - The function can be tailored to suit specific needs by modifying the structure of the `msg` or `body`.
 
-```
-
 -----
 
-## catchFunc
+##❌ catchFunc
 
 -----
 
@@ -157,7 +155,7 @@ app.get('/data', (req, res) => {
 
 -----
 
-## setPublicDirFunc(app, express, dirPath)
+##📂 setPublicDirFunc(app, express, dirPath)
 
 -----
 
@@ -179,7 +177,7 @@ setPublicDirFunc(app, express, 'assets');  // Serves static files from 'assets' 
 
 -----
 
-## setExpressUrlendodedAndJson(app, express)
+##🔗 setExpressUrlendodedAndJson(app, express)
 
 -----
 
@@ -202,7 +200,7 @@ setExpressUrlendodedAndJson(app, express);  // Sets up JSON and URL-encoded pars
 
 -----
 
-## setTemplateEngineFunc(app, viewDirPath, viewEngine)
+##🖼️ setTemplateEngineFunc(app, viewDirPath, viewEngine)
 
 -----
 
@@ -223,7 +221,7 @@ setTemplateEngineFunc(app, 'templates', 'pug');  // Uses Pug as the view engine 
 ```
 -----
 
-## setCors(app)
+##🌐 setCors(app)
 
 -----
 
@@ -247,7 +245,7 @@ setCors(app);  // Enables CORS for cross-origin requests
 
 -----
 
-# setupBasicMiddlewaresConfig
+#🛡️ setupBasicMiddlewaresConfig
 
 -----
 
@@ -277,7 +275,7 @@ setupBasicMiddlewaresConfig(app, express, 'assets', 'templates', 'pug');
 ```
 -----
 
-# `resSendFileFunc`
+#📄 resSendFileFunc
 
 -----
 
@@ -300,11 +298,11 @@ app.get('/download', (req, res) => {
 });
 ```
 
-## License
+##📜 License
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
 
-## Author
+##👤 Author
 
 - [@rvxx007](https://github.com/rvxx007)
