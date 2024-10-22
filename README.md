@@ -300,9 +300,10 @@ app.get('/download', (req, res) => {
 
 ## 📜 License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+- [MIT](https://choosealicense.com/licenses/mit/)
 
 
 ## 👤 Author
 
 - [@rvxx007](https://github.com/rvxx007)
+- [akashkawle0@gmail.com](mailto:akashkawle0@gmail.com)
