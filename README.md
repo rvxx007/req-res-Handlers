@@ -19,20 +19,20 @@
 - **🖼️ setTemplateEngineFunc(app, viewDirPath, viewEngine):** Configures a templating engine for rendering views, allowing for dynamic content generation based on server-side logic.
 - **🌐 setCors(app):** Enables Cross-Origin Resource Sharing (CORS), facilitating cross-origin requests and enhancing the flexibility of your API.
 
-####🔧 Basic Middleware Configuration:
+#### 🔧 Basic Middleware Configuration:
 
 - **🛡️ setupBasicMiddlewaresConfig(app, express, publicDirPath, viewDirPathForTemplateEngine, viewEngineTemplateEngine):** A comprehensive function that sets up multiple essential middleware in one go, ensuring your Express application is configured correctly from the start.
 
-####📁 File Response Function:
+#### 📁 File Response Function:
 
 - **📄resSendFileFunc(res, filePath):** A utility to send files as responses, simplifying the process of delivering static files to clients.
 
-##📚 Documentation
+## 📚 Documentation
 
 [Documentation](https://#)
 
 
-##📦 Installation
+## 📦 Installation
 
 Install Package with npm
 
@@ -40,7 +40,7 @@ Install Package with npm
   npm i req-res-handlers
 ```
     
-##🚀 Usage/Examples
+## 🚀 Usage/Examples
 
 ```javascript
 import { 
@@ -56,7 +56,7 @@ resSendFileFunc } from 'req-res-Handlers'
 
 -----
 
-##📝 resFunc
+## 📝 resFunc
 
 -----
 
@@ -98,7 +98,7 @@ resFunc(res, 200, true, "Request was successful", { data: "Your data here" });
 
 -----
 
-##❌ catchFunc
+## ❌ catchFunc
 
 -----
 
@@ -155,7 +155,7 @@ app.get('/data', (req, res) => {
 
 -----
 
-##📂 setPublicDirFunc(app, express, dirPath)
+## 📂 setPublicDirFunc(app, express, dirPath)
 
 -----
 
@@ -177,7 +177,7 @@ setPublicDirFunc(app, express, 'assets');  // Serves static files from 'assets' 
 
 -----
 
-##🔗 setExpressUrlendodedAndJson(app, express)
+## 🔗 setExpressUrlendodedAndJson(app, express)
 
 -----
 
@@ -200,7 +200,7 @@ setExpressUrlendodedAndJson(app, express);  // Sets up JSON and URL-encoded pars
 
 -----
 
-##🖼️ setTemplateEngineFunc(app, viewDirPath, viewEngine)
+## 🖼️ setTemplateEngineFunc(app, viewDirPath, viewEngine)
 
 -----
 
@@ -221,7 +221,7 @@ setTemplateEngineFunc(app, 'templates', 'pug');  // Uses Pug as the view engine 
 ```
 -----
 
-##🌐 setCors(app)
+## 🌐 setCors(app)
 
 -----
 
@@ -245,7 +245,7 @@ setCors(app);  // Enables CORS for cross-origin requests
 
 -----
 
-#🛡️ setupBasicMiddlewaresConfig
+# 🛡️ setupBasicMiddlewaresConfig
 
 -----
 
@@ -275,7 +275,7 @@ setupBasicMiddlewaresConfig(app, express, 'assets', 'templates', 'pug');
 ```
 -----
 
-#📄 resSendFileFunc
+# 📄 resSendFileFunc
 
 -----
 
@@ -298,11 +298,11 @@ app.get('/download', (req, res) => {
 });
 ```
 
-##📜 License
+## 📜 License
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
 
-##👤 Author
+## 👤 Author
 
 - [@rvxx007](https://github.com/rvxx007)
