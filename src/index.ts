@@ -1,17 +1,28 @@
 
-// if we required any value that time we can use this funtion to thow the Exception
-// this Function take value and throw Exception 
-function isRequired(any:any) {
-    throw new Error(`${any} is Required`)
-}
 
+/**
+ * Sends a formatted JSON response to the client.
 
-// This function take some parameter like response Object , statusCode (like 200 for success, 404 not found, etc. )
-// success indicate response is successful or not thats why it take boolean value.
-// msg take String type of data for Successful message or error message.
-// body is a object which is use to send json object data as response.
-function resFunc(res:any,statusCode:number,success:boolean,msg:string,body:object){
-    
+ * This function constructs a JSON response with the specified status code, success flag, message, and data.
+ * It ensures that the provided parameters are of the correct types and throws appropriate errors if invalid.
+
+ * @param res The Express response object.
+ * @param statusCode The HTTP status code to set for the response.
+ * @param success A boolean indicating whether the request was successful.
+ * @param msg A string message to include in the response.
+ * @param data An object containing additional data to include in the response.
+
+ * @throws {TypeError} If any of the parameters are of an invalid type.
+
+ * @example
+ * ```typescript
+ * app.get('/users', (req, res) => {
+ *     const users = getUsers(); // Assuming this fetches users
+ *     sendResponse(res, 200, true, 'Users fetched successfully', users);
+ * });
+ * ```
+ */
+function sendResponse(res: any, statusCode: number, success: boolean, msg: string, data: object) {
     if (typeof statusCode !== 'number') {
         throw new TypeError('statusCode must be a number');
     }
@@ -21,66 +32,54 @@ function resFunc(res:any,statusCode:number,success:boolean,msg:string,body:objec
     if (typeof msg !== 'string') {
         throw new TypeError('msg must be a string');
     }
-    if (typeof body !== 'object' || body === null) {
-        throw new TypeError('body must be an object');
+    if (typeof data !== 'object' || data === null) {
+        throw new TypeError('data must be an object');
     }
-    
-    res.status(statusCode).send({
-        success: success,
-        msg:msg,
-        body:body
-    })
+
+    res.status(statusCode).json({
+        success,
+        msg,
+        data
+    });
 }
 
 
-// This function take some parameter like response Object , statusCode (like 200 for success, 404 not found, etc. )
-// success by default is false beacause catchFunc use to send Server Error type of response.
-// msg take String type of data for Successful message or error message.
-// error is a object which is use to send error(which we recievied from the catch((error)=>{console.error(error)}) block) object data as response.
-function catchFunc(res:any,statusCode:number,msg:string,error:object){
-    
+
+/**
+ * Error handler function to handle errors and send appropriate responses.
+
+ * @param err The error object.
+ * @param res The response object.
+ * @param statusCode The HTTP status code to send in the response.
+ * @param msg The error message to send in the response.
+
+ * This function logs the error stack to the console, validates the `statusCode` and `msg` parameters, and sends a JSON response with a `success` flag set to `false`, the specified `msg`, and the error object as `data`.
+
+ * @example
+ * ```typescript
+ * import { errorHandler } from './errorHandler';
+
+ * app.use((err, req, res, next) => {
+ *     errorHandler(err, res, 500, 'Internal Server Error');
+ * });
+ * ```
+ */
+function errorHandler(err: Error, res: any, statusCode: number, msg: string) {
+    console.error(err.stack);
+
     if (typeof statusCode !== 'number') {
         throw new TypeError('statusCode must be a number');
     }
     if (typeof msg !== 'string') {
         throw new TypeError('msg must be a string');
     }
-    if (typeof error !== 'object' || error === null) {
-        throw new TypeError('body must be an object');
-    }
 
-    res.status(statusCode).send({
+    res.status(statusCode).json({
         success: false,
-        msg:msg,
-        body:error
-    })
+        msg: msg,
+        data: err
+    });
 }
-
-
-/**
- * Sets up a public directory for serving static files in an Express app.
- *
- * @param {object} app - The Express application instance.
- * @param {object} express - The Express module (typically imported as `express`).
- * @param {object} path - The Node.js `path` module for handling file and directory paths.
- * @param {string} __dirname - The directory name from which the module is being executed.
- *                            This is typically obtained using:
- *                            import { fileURLToPath } from 'url';
- *                            import path, { dirname } from 'path';
- *                            const __filename = fileURLToPath(import.meta.url);
- *                            const __dirname = dirname(__filename);
- * @param {string} dirPath - The path to the directory from which static files should be served. 
- *                           Defaults to 'public' if no directory path is specified.
- *
- * This function configures the Express app to serve static assets (like images, CSS, and JavaScript files)
- * from the specified directory. If no directory is provided, it defaults to the 'public' directory.
- * It utilizes the `path` module to ensure the correct path is generated based on the application's directory structure.
- */
-function setPublicDirFunc(app: any, express: any, path: any, __dirname: string, dirPath: string = "public") {
-    // Serve static files from the specified directory
-    app.use(express.static(path.join(__dirname, dirPath)));
-}
-
 
 /**
  * Configures the Express app to parse incoming requests with JSON and URL-encoded payloads.
@@ -105,123 +104,120 @@ function setExpressUrlendodedAndJson(app:any,express:any){
 
 
 /**
- * Configures the template engine and views directory for the Express application.
+ * Sets up CORS middleware for an Express application.
+
+ * This function configures CORS middleware to allow requests from specified origins and with specific HTTP methods.
+
+ * @param app The Express application instance.
+ * @param cors The CORS middleware instance.
+ * @param originUrls An array of allowed origin URLs.
+ * @param methods An array of allowed HTTP methods.
+ */
+function setCors(app: any, cors: any, originUrls: string[], methods: string[] = ['GET', 'POST', 'PUT', 'DELETE']) {
+    app.use(cors({
+        origin: [...originUrls],
+        methods: methods,
+        allowedHeaders: ['Content-Type', 'Authorization']
+    }));
+}
+
+
+/**
+ * Logs incoming HTTP requests and their corresponding responses.
+
+ * This middleware function logs the HTTP method, URL, and status code of each incoming request to the console. It is typically used to monitor application traffic and identify potential issues.
+
+ * @param req The incoming HTTP request object.
+ * @param res The outgoing HTTP response object.
+ * @param next The next middleware function in the chain.
+ */
+function logRequest(req: Request, res: Response, next: Function) {
+    console.log(`${req.method} ${req.url} - ${res.status}`);
+    next();
+}
+
+
+/**
+ * Logs an error to the console and passes it to the next error-handling middleware.
+
+ * This function is typically used as an error-handling middleware in Express.js applications. It logs the error stack to the console for debugging purposes and then passes the error to the next middleware in the error-handling chain.
+
+ * @param err The error object.
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The next middleware function.
+ */
+function logError(err: Error, req: Request, res: Response, next: Function) {
+    console.error(err.stack);
+    next(err);
+  }
+
+
+/**
+ * Paginates an array of items.
  *
- * @param {Object} app - The Express application instance.
- * @param {string} [viewDirPath='views'] - The directory path for the views (default is 'views').
- * @param {Object} path - The Node.js path module for handling file and directory paths.
- * @param {string} __dirname - The directory name of the current module, typically obtained using:
- *                             `import { fileURLToPath } from 'url';`
- *                             `import path, { dirname } from 'path';`
- *                             `const __filename = fileURLToPath(import.meta.url);`
- *                             `const __dirname = dirname(__filename);`
- * @param {string} [viewEngine='ejs'] - The template engine to be used (default is 'ejs').
+ * This function takes an array of items, a page number, and a limit, and returns a new array containing the specified page of items.
+ * 
+ * @param items The array of items to paginate.
+ * @param page The page number (1-indexed).
+ * @param limit The number of items per page.
+ *
+ * @returns A new array containing the paginated items.
  *
  * @example
- * const express = require('express');
- * const path = require('path');
- * const app = express();
- * const { fileURLToPath } = require('url');
- * const { dirname } = require('path');
- * const __filename = fileURLToPath(import.meta.url);
- * const __dirname = dirname(__filename);
+ * ```typescript
+ * const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
  *
- * setTemplateEngineFunc(app, 'views', path, __dirname, 'ejs');
+ * const page1 = paginate(numbers, 1, 3); // [1, 2, 3]
+ * const page2 = paginate(numbers, 2, 3); // [4, 5, 6]
+ * const page3 = paginate(numbers, 3, 3); // [7, 8, 9]
+ * ```
  */
-function setTemplateEngineFunc(app: any,path: any, __dirname: string, viewDirPath: string = 'views', viewEngine: string = 'ejs') {
-    app.set('views', path.join(__dirname, viewDirPath));
-    app.set('view engine', viewEngine);
+function paginate<T>(items : T[], page:number, limit:number):T[] {
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedItems = items.slice(startIndex, endIndex);
+    return paginatedItems;
 }
 
 
+
 /**
- * Configures CORS (Cross-Origin Resource Sharing) for the Express application.
- * 
- * This function adds middleware to the Express application to handle 
- * Cross-Origin Resource Sharing (CORS) issues. CORS is essential for allowing 
- * or restricting resources on a web server based on the origin of the request.
- * 
- * By enabling CORS, the server can accept requests from different domains, 
- * which is often necessary for seamless frontend and backend communication 
- * across various servers.
- * 
- * @param {Object} app - The Express application instance.
- * @param {Object} cors - The CORS middleware module.
- * 
+ * Authorizes a request based on the user's role.
+ *
+ * This middleware function checks if the user's role matches the specified role. If not, it returns a 403 Forbidden response.
+ * Otherwise, it calls the next middleware function.
+ *
+ * @param role The required role for authorization.
+ *
+ * @returns A middleware function that checks the user's role.
+ *
  * @example
- * import cors from 'cors';
- * setCors(app, cors);
- * 
- * In this example, the `cors` middleware is imported and then used to configure 
- * the Express app to handle CORS-related requests.
+ * ```typescript
+ * const router = express.Router();
+ *
+ * router.get('/admin', authorizeRole('admin'), (req, res) => {
+ *     // Admin-only route
+ *     res.send('Admin dashboard');
+ * });
+ * ```
  */
-function setCors(app: any, cors: any) {
-    // Middleware to handle Cross-Origin Resource Sharing errors
-    app.use(cors());
-}
+function authorizeRole(role: string): (req: Request, res: Response, next: Function) => void {
+    return (req: any, res: any, next: Function) => {
+      if (req.user.role !== role) {
+        return res.status(403).json({ message: 'Unauthorized' });
+      }
+      next();
+    };
+  }
 
-
-/**
- * Configures basic middlewares for an Express.js application.
- * 
- * This function sets up common middlewares for the Express app including:
- * - Parsing URL-encoded and JSON request bodies
- * - Serving static files from a specified public directory
- * - Configuring the template engine for server-side rendering
- * - Enabling Cross-Origin Resource Sharing (CORS)
- * 
- * @param {Object} app - The Express.js application instance to configure middlewares for.
- * @param {Object} express - The Express.js module, used for setting up middleware functions.
- * @param {Object} path - The Node.js path module, used for handling and transforming file paths.
- * @param {Object} cors - The CORS middleware, used for enabling Cross-Origin Resource Sharing.
- * @param {string} __dirname - The current directory name of the module, useful for resolving paths.
- * @param {string} [publicDirPath="public"] - The path to the directory containing static files (e.g., images, CSS, JavaScript) to be served. Default is 'public'.
- * @param {string} [viewDirPathForTemplateEngine="views"] - The directory path for the template engine views. Default is 'views'.
- * @param {string} [viewEngineTemplateEngine="ejs"] - The template engine to use for rendering views. Default is 'ejs'.
- * 
- * The function internally calls the following helper functions:
- * 1. `setExpressUrlendodedAndJson(app, express)` - Configures the app to parse URL-encoded and JSON request bodies.
- * 2. `setPublicDirFunc(app, express, __dirname, publicDirPath)` - Sets the static file directory.
- * 3. `setTemplateEngineFunc(app, path, __dirname, viewDirPathForTemplateEngine, viewEngineTemplateEngine)` - Configures the app to use a specific template engine.
- * 4. `setCors(app, cors)` - Enables CORS on the application to handle cross-origin requests.
- */
-function setupBasicMiddlewaresConfig(app: any, express: any, path: any, cors: any, __dirname: string, publicDirPath: string = "public", viewDirPathForTemplateEngine: string = 'views', viewEngineTemplateEngine: string = 'ejs') {
-    setExpressUrlendodedAndJson(app, express);
-    setPublicDirFunc(app, express, __dirname, publicDirPath);
-    setTemplateEngineFunc(app, path, __dirname, viewDirPathForTemplateEngine, viewEngineTemplateEngine);
-    setCors(app, cors);
-}
-
-
-/**
- * Sends a file to the client using the specified response object and file path.
- * 
- * @param {Object} res - The response object (usually from Express) used to send the file to the client.
- * @param {string} filePath - The relative path to the file that should be sent.
- * @param {Object} path - The Node.js 'path' module, used for handling file and directory paths.
- * @param {string} __dirname - The directory name from which the server is running, typically provided by `__dirname` .
- * 
- * This function constructs the full file path by joining the current directory (`dirname`) 
- * with the provided `filePath` using the `path.join()` method to ensure compatibility 
- * across different operating systems. It then uses the `res.sendFile()` method to send 
- * the file to the client.
- * 
- * Example usage:
- * 
- *    resSendFileFunc(res, '/files/example.pdf', path, __dirname);
- * 
- * In this example, the server will send the `example.pdf` file located in the `/files` directory.
- */
-function resSendFileFunc(res: any, filePath: string, path: any, __dirname: string) {
-    res.sendFile(path.join(__dirname, filePath));
-}
-
-
-export {resFunc,
-    catchFunc,
-    setPublicDirFunc,
+export {
+    sendResponse,
+    errorHandler,
     setExpressUrlendodedAndJson,
-    setTemplateEngineFunc,
     setCors,
-    setupBasicMiddlewaresConfig,
-    resSendFileFunc}
+    logRequest,
+    logError,
+    authorizeRole,
+    paginate,
+    }
