@@ -1,4 +1,4 @@
-
+import { Request, Response, NextFunction } from "express";
 
 /**
  * Sends a formatted JSON response to the client.
@@ -22,7 +22,7 @@
  * });
  * ```
  */
-function sendResponse(res: any, statusCode: number, success: boolean, msg: string, data: object) {
+function sendResponse(res: Response, statusCode: number, success: boolean, msg: string, data: object) {
     if (typeof statusCode !== 'number') {
         throw new TypeError('statusCode must be a number');
     }
@@ -64,7 +64,7 @@ function sendResponse(res: any, statusCode: number, success: boolean, msg: strin
  * });
  * ```
  */
-function errorHandler(err: Error, res: any, statusCode: number, msg: string) {
+function errorHandler(err: Error, res: Response, statusCode: number, msg: string) {
     console.error(err.stack);
 
     if (typeof statusCode !== 'number') {
@@ -131,8 +131,8 @@ function setCors(app: any, cors: any, originUrls: string[], methods: string[] = 
  * @param res The outgoing HTTP response object.
  * @param next The next middleware function in the chain.
  */
-function logRequest(req: Request, res: Response, next: Function) {
-    console.log(`${req.method} ${req.url} - ${res.status}`);
+function logRequest(req: Request, res: Response, next: NextFunction) {
+    console.log(`${req.method} - ${req.url} - ${res.status}`);
     next();
 }
 
@@ -147,7 +147,7 @@ function logRequest(req: Request, res: Response, next: Function) {
  * @param res The response object.
  * @param next The next middleware function.
  */
-function logError(err: Error, req: Request, res: Response, next: Function) {
+function logError(err: Error, req: Request, res: Response, next: NextFunction) {
     console.error(err.stack);
     next(err);
   }
@@ -202,7 +202,7 @@ function paginate<T>(items : T[], page:number, limit:number):T[] {
  * });
  * ```
  */
-function authorizeRole(role: string): (req: Request, res: Response, next: Function) => void {
+function authorizeRole(role: string): (req: Request, res: Response, next: NextFunction) => void {
     return (req: any, res: any, next: Function) => {
       if (req.user.role !== role) {
         return res.status(403).json({ message: 'Unauthorized' });
