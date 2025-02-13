@@ -1,6 +1,6 @@
 {
   "name": "req-res-handlers",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -32,6 +32,5 @@
   },
   "dependencies": {
     "@types/express": "^5.0.0"
-
   }
 }

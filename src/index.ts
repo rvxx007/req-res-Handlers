@@ -1,27 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-/**
- * Sends a formatted JSON response to the client.
 
- * This function constructs a JSON response with the specified status code, success flag, message, and data.
- * It ensures that the provided parameters are of the correct types and throws appropriate errors if invalid.
-
- * @param res The Express response object.
- * @param statusCode The HTTP status code to set for the response.
- * @param success A boolean indicating whether the request was successful.
- * @param msg A string message to include in the response.
- * @param data An object containing additional data to include in the response.
-
- * @throws {TypeError} If any of the parameters are of an invalid type.
-
- * @example
- * ```typescript
- * app.get('/users', (req, res) => {
- *     const users = getUsers(); // Assuming this fetches users
- *     sendResponse(res, 200, true, 'Users fetched successfully', users);
- * });
- * ```
- */
 function sendResponse(res: Response, statusCode: number, success: boolean, msg: string, data: object) {
     if (typeof statusCode !== 'number') {
         throw new TypeError('statusCode must be a number');
