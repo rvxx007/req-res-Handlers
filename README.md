@@ -2,171 +2,130 @@
 ![Logo](https://github.com/rvxx007/req-res-Handlers/blob/main/public/poster.jpeg)
 # <img src="https://github.com/rvxx007/req-res-Handlers/blob/main/public/logo.png" width="20" height="20"> req-res-Handlers
 
-**req-res-Handlers** is a versatile npm package designed to simplify the handling of HTTP requests and responses in Express applications. It provides a suite of utility functions that streamline common tasks, enhance error handling, and configure essential middleware, enabling developers to focus on building robust server applications.## Features
 
-### ⚙️ Response Handling Functions
+# req-res-Handlers - Express Response Utility Functions
+**req-res-Handlers** is a versatile npm package designed to simplify the handling of HTTP requests and responses in Express applications. It provides a suite of utility functions that streamline common tasks, enhance error handling, and configure essential middleware, enabling developers to focus on building robust server applications.
+This repository provides a collection of utility functions to manage HTTP responses in an Express.js application. These functions cover various response categories such as informational, success, redirection, client errors, server errors, and more. Each function aims to standardize response formatting, improve code maintainability, and enhance readability for better handling of different types of HTTP status codes.
 
-- **📝 sendResponse**:
-A standardized method for sending JSON responses to clients. This function ensures consistency and structure across all API responses, making it easier for developers to manage and understand response formats. Sends a formatted JSON response to the client.
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Informational Responses](#informational-responses)
+  - [Success Responses](#success-responses)
+  - [Redirection Responses](#redirection-responses)
+  - [Client Error Responses](#client-error-responses)
+  - [Server Error Responses](#server-error-responses)
+- [Additional Features](#additional-features)
+- [Contributing](#contributing)
+- [License](#license)
 
-- **❌ errorHandler**:
-An error handling utility that formats error responses effectively. This function improves communication with clients by providing clear and concise error messages, facilitating easier troubleshooting. Handles errors and sends appropriate responses.
-
-### 🛠️ Middleware Setup Functions
-
-
-- **🔗 setExpressUrlencodedAndJson(app, express)**:
-Sets up middleware for parsing incoming requests with JSON and URL-encoded payloads. This allows your application to handle various content types seamlessly, ensuring better compatibility with client requests.
-
-- **🌐 setCors(app, cors, originUrls, methods)**:
-Enables Cross-Origin Resource Sharing (CORS), allowing your API to handle cross-origin requests. This feature enhances application flexibility by enabling it to interact with resources from different origins. Sets up CORS middleware for an Express application.
-
-- **🌐 logRequest(req, res, next)**:
-Logs incoming HTTP requests and their corresponding responses to the console. This is useful for debugging and monitoring application traffic.
-
-- **🌐 logError(err, req, res, next)**:
-Logs errors to the console and passes them to the next error-handling middleware. This helps in debugging and tracking errors within the application.
-
-- **🌐 authorizeRole(role)**:
-Authorizes requests based on the user's role. It checks if the user's role matches the specified role. If not, it returns a 403 Forbidden response.
-
-- **🌐 paginate(items, page, limit)**:
-Paginates an array of items. It takes an array of items, a page number, and a limit, and returns a new array containing the specified page of items.
-## Documentation
-
-[Documentation](https://github.com/rvxx007/req-res-Handlers/)
 ## Installation
 
-Install Package with npm
+To use these response utility functions in your project, follow these steps:
 
-```bash
-  npm i req-res-handlers
-```
-        
-## Usage/Examples
+1. Clone or download the repository.
+2. Install the required dependencies by running:
+   ```bash
+   npm install express
+   ```
 
-```javascript
-import { 
-    sendResponse,
-    errorHandler,
-    setExpressUrlendodedAndJson,
-    setCors,
-    logRequest,
-    logError,
-    authorizeRole,
-    paginate, } from 'req-res-Handlers';
-    
-```
-### 1. sendResponse
+3. Import the functions in your Express application:
+   ```typescript
+   import { sendInformationalResponse, sendSuccessResponse, sendClientErrorResponse, sendServerErrorResponse, setCors, logRequest } from './responseUtils';
+   ```
 
-- **Purpose:** Standardizes JSON response formatting for various HTTP status codes and success/failure scenarios.
-- **Key points:**
-    Ensures type safety for input parameters.
-    Provides a consistent response structure.
-    Can be used for both success and error responses.
-**Example:**
-```JavaScript
-// Successful response
-sendResponse(res, 200, true, 'User created successfully', { userId: 123 });
+## Usage
 
-// Error response
-sendResponse(res, 400, false, 'Invalid input data', { error: 'Missing required field' });
+### Informational Responses (1xx)
+
+These functions send HTTP responses with informational status codes (100, 101, 102). You can include optional data with the response.
+
+#### `sendInformationalResponse(res, statusCode, msg, data?)`
+Sends an informational HTTP response with an optional data payload.
+
+```typescript
+sendInformationalResponse(res, 100, "Continue processing", { extraData: "some data" });
 ```
 
-### 2. errorHandler
+### Success Responses (2xx)
 
-- **Purpose:** Centralized error handling for Express applications, logging errors and sending appropriate responses.
-- **Key points:**
-    Logs the error stack for debugging.
-    Sends a standardized error response.
-    Can be used as a global error handler.
+These functions send HTTP responses with success status codes (200, 201, 202, etc.). You can include optional data with the response.
 
-**Example:**
-```JavaScript
-// Global error handler
-app.use((err, req, res, next) => {
-    errorHandler(err, res, 500, 'Internal Server Error');
-});
+#### `sendSuccessResponse(res, statusCode, msg, data?)`
+Sends a standardized success response with a 2xx status code.
+
+```typescript
+sendSuccessResponse(res, 200, "Request succeeded", { userId: 123 });
 ```
 
-### 3. setExpressUrlendodedAndJson
+### Redirection Responses (3xx)
 
-Purpose: Configures Express to parse JSON and URL-encoded request bodies.
-- **Key points:**
-    Essential for handling form submissions and API requests.
-    Ensures proper data extraction from requests.
+These functions send HTTP responses for redirection status codes (300, 301, 302, etc.).
 
-**Example:**
-```JavaScript
-// In your app initialization:
-setExpressUrlendodedAndJson(app, express);
+#### `sendRedirectionResponse(res, statusCode, msg, data?)`
+Sends a redirection response with a 3xx status code.
+
+```typescript
+sendRedirectionResponse(res, 301, "Resource moved", { newUrl: "https://newlocation.com" });
 ```
 
-### 4. setCors
+### Client Error Responses (4xx)
 
-Purpose: Enables Cross-Origin Resource Sharing (CORS) to allow requests from different origins.
-- **Key points:**
-    Prevents security issues related to cross-origin requests.
-    Configures allowed origins, methods, and headers.
+These functions send HTTP responses with client error status codes (400, 401, 403, etc.).
 
-**Example:**
-```JavaScript
-// In your app initialization:
-setCors(app, cors, ['http://example.com', 'https://api.example.com']);
+#### `sendClientErrorResponse(res, statusCode, msg, data?)`
+Sends a client error response with a specified 4xx status code.
+
+```typescript
+sendClientErrorResponse(res, 404, "Resource not found", { resource: "user" });
 ```
 
-### 5. logRequest
+### Server Error Responses (5xx)
 
-Purpose: Logs incoming HTTP requests for monitoring and debugging.
-- **Key points:**
-    Provides insights into application traffic.
-    Helps identify performance bottlenecks and potential issues.
+These functions send HTTP responses with server error status codes (500, 502, 503, etc.).
 
-**Example:**
-```JavaScript
-// In your middleware stack:
-app.use(logRequest);
+#### `sendServerErrorResponse(res, statusCode, msg, data?)`
+Sends a server error response with a specified 5xx status code.
+
+```typescript
+sendServerErrorResponse(res, 500, "Internal server error", { error: "Database connection failed" });
 ```
 
-### 6. logError
+## Additional Features
 
-Purpose: Logs errors to the console for debugging and passes them to the next error handler.
-- **Key points:**
-    Provides detailed error information.
-    Can be used in conjunction with other error-handling middleware.
+- **CORS Setup**: Use `setCors()` to configure CORS middleware for your Express app.
+  
+  ```typescript
+  setCors(app, cors, ['https://example.com'], ['GET', 'POST']);
+  ```
 
-**Example:**
-```JavaScript
-// In your error-handling middleware stack:
-app.use(logError);
-```
+- **Logging Requests**: Use `logRequest()` to log incoming requests.
 
-### 7. paginate
+  ```typescript
+  app.use(logRequest);
+  ```
 
-Purpose: Implements pagination for large datasets.
-- **Key points:**
-    Divides data into smaller, manageable pages.
-    Improves performance and user experience.
+- **Error Handling Middleware**: Use `logError()` to log error details.
 
-**Example:**
-```JavaScript
-// Paginate a list of users:
-const paginatedUsers = paginate(users, 2, 10);
-```
+  ```typescript
+  app.use(logError);
+  ```
 
-### 8. authorizeRole
+- **Pagination**: Use `paginate()` to paginate arrays of items.
 
-Purpose: Enforces role-based access control.
-- **Key points:**
-    Protects sensitive routes from unauthorized access.
-    Can be used to implement granular permissions.
+  ```typescript
+  const items = [1, 2, 3, 4, 5];
+  const page1 = paginate(items, 1, 2);  // [1, 2]
+  ```
 
-**Example:**
-```JavaScript
-// Protect an admin-only route:
-router.get('/admin', authorizeRole('admin'), (req, res) => {...}
+- **Role Authorization**: Use `authorizeRole()` to restrict access based on user roles.
 
-```
+  ```typescript
+  const adminRoute = express.Router();
+  adminRoute.use(authorizeRole('admin'));
+  ```
+
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)

@@ -1,85 +1,415 @@
 import { Request, Response, NextFunction } from "express";
 
+/**
+ * req-res-handlers - is a versatile npm package designed to simplify the handling of HTTP requests and responses in Express applications. It provides a suite of utility functions that streamline common tasks, enhance error handling, and configure essential middleware, enabling developers to focus on building robust server applications.
+ * This repository provides a collection of utility functions to manage HTTP responses in an Express.js application. These functions cover various response categories such as informational, success, redirection, client errors, server errors, and more. Each function aims to standardize response formatting, improve code maintainability, and enhance readability for better handling of different types of HTTP status codes.
+ */
 
-function sendResponse(res: Response, statusCode: number, success: boolean, msg: string, data: object) {
-    if (typeof statusCode !== 'number') {
-        throw new TypeError('statusCode must be a number');
-    }
-    if (typeof success !== 'boolean') {
-        throw new TypeError('success must be a boolean');
-    }
-    if (typeof msg !== 'string') {
-        throw new TypeError('msg must be a string');
-    }
-    if (typeof data !== 'object' || data === null) {
-        throw new TypeError('data must be an object');
-    }
+// -------------------------------------------------------------------- \\
+//                      New Updated Method Block
+// -------------------------------------------------------------------- \\
 
+
+/**
+ * Sends an informational HTTP response (1xx) with an optional data payload.
+ *
+ * @param res - Express response object.
+ * @param statusCode - HTTP status code (100, 101, 102).
+ *  - 100: "Continue"
+ *  - 101: "Switching Protocols"
+ *  - 102: "Processing"
+ * @param msg - Additional message to provide context to the status code.
+ * @param data - Optional data to include in the response, can be an object or an array.
+ *
+ * @returns void
+ */
+function sendInformationalResponse(res:Response , statusCode:100|101|102, msg:string, data?:object|[] ):void{
+
+    if(!data){
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===100?"Continue : ":(statusCode===101?"Switching Protocols : ":(statusCode===102&&"Proccessing : ")))+msg,
+        })
+    }else{
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===100?"Continue : ":(statusCode===101?"Switching Protocols : ":(statusCode===102&&"Proccessing : ")))+msg,
+            data
+        })
+    }
+}
+
+// -------------------------------------------------------------------- \\
+
+
+/**
+ * Sends an HTTP 1xx informational response with optional data.
+ *
+ * This function is an alias for `sendInformationalResponse` with identical functionality.
+ *
+ * @param res - Express response object.
+ * @param statusCode - HTTP status code (100, 101, 102).
+ *  - 100: "Continue"
+ *  - 101: "Switching Protocols"
+ *  - 102: "Processing"
+ * @param msg - Additional message to provide context to the status code.
+ * @param data - Optional data to include in the response, can be an object or an array.
+ *
+ * @returns void
+ */
+function send1xxInformationalResponse(res:Response , statusCode:100|101|102, msg:string, data?:object|[] ):void{
+
+    if(!data){
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===100?"Continue : ":(statusCode===101?"Switching Protocols : ":(statusCode===102&&"Proccessing : ")))+msg,
+        })
+    }else{
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===100?"Continue : ":(statusCode===101?"Switching Protocols : ":(statusCode===102&&"Proccessing : ")))+msg,
+            data
+        })
+    }
+}
+
+// -------------------------------------------------------------------- \\
+
+/**
+ * Sends a standardized success response with a 2xx status code.
+ *
+ * @param res - Express response object.
+ * @param statusCode - HTTP status code (200, 201, 202, 203, 204, 205, 206).
+ * @param msg - Message to include in the response.
+ * @param data - Optional data to include in the response (object or array).
+ *
+ * Status Codes and Corresponding Messages:
+ * - 200: "OK"
+ * - 201: "Created"
+ * - 202: "Accepted"
+ * - 203: "Non-Authoritative Information"
+ * - 204: "No Content"
+ * - 205: "Reset Content"
+ * - 206: "Partial Content"
+ */
+
+function sendSuccessResponse(res:Response , statusCode:200|201|202|203|204|205|206, msg:string, data?:object|[] ):void{
+
+    if(!data){
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===200?"OK : ":(statusCode===201?"Created : ":(statusCode===202?"Accepted : ":(statusCode===203?"Non-Authoritative Information : ":(statusCode===204?"No Content : ":(statusCode===205?"Reset Content : ":(statusCode===206&&"Partial Content : ")))))))+msg,
+        })
+    }else{
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===200?"OK : ":(statusCode===201?"Created : ":(statusCode===202?"Accepted : ":(statusCode===203?"Non-Authoritative Information : ":(statusCode===204?"No Content : ":(statusCode===205?"Reset Content : ":(statusCode===206&&"Partial Content : ")))))))+msg,
+            data
+        })
+    }
+}
+
+/**
+ * Alias for sendSuccessResponse, providing the same functionality.
+ * Sends a standardized success response with a 2xx status code.
+ *
+ * @param res - Express response object.
+ * @param statusCode - HTTP status code (200, 201, 202, 203, 204, 205, 206).
+ * @param msg - Message to include in the response.
+ * @param data - Optional data to include in the response (object or array).
+ */
+
+function send2xxSuccessResponse(res:Response , statusCode:200|201|202|203|204|205|206, msg:string, data?:object|[] ):void{
+
+    if(!data){
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===200?"OK : ":(statusCode===201?"Created : ":(statusCode===202?"Accepted : ":(statusCode===203?"Non-Authoritative Information : ":(statusCode===204?"No Content : ":(statusCode===205?"Reset Content : ":(statusCode===206&&"Partial Content : ")))))))+msg,
+        })
+    }else{
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===200?"OK : ":(statusCode===201?"Created : ":(statusCode===202?"Accepted : ":(statusCode===203?"Non-Authoritative Information : ":(statusCode===204?"No Content : ":(statusCode===205?"Reset Content : ":(statusCode===206&&"Partial Content : ")))))))+msg,
+            data
+        })
+    }
+}
+
+/**
+ * Sends a 3xx redirection response to the client.
+ *
+ * @param res - Express Response object used to send the HTTP response.
+ * @param statusCode - The HTTP status code for redirection (300, 301, 302, 303, 304, 307, 308).
+ * @param msg - A custom message to append to the status description.
+ * @param data - Optional data to include in the response body (object or array).
+ *
+ * @returns void
+ *
+ * @example
+ * sendRedirectionResponse(res, 301, "Resource moved to a new location.", { url: "https://example.com" });
+ */
+
+function sendRedirectionResponse(res:Response , statusCode:300|301|302|303|304|307|308, msg:string, data?:object|[] ):void{
+
+    if(!data){
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===300?"Multiple Choices : ":(statusCode===301?"Moved Permanently : ":(statusCode===302?"Found : ":(statusCode===303?"See Other : ":(statusCode===304?"Not Modified : ":(statusCode===307?"Temporary Redirect : ":(statusCode===308&&"Parmanent Redirect : ")))))))+msg,
+        })
+    }else{
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===300?"Multiple Choices : ":(statusCode===301?"Moved Permanently : ":(statusCode===302?"Found : ":(statusCode===303?"See Other : ":(statusCode===304?"Not Modified : ":(statusCode===307?"Temporary Redirect : ":(statusCode===308&&"Parmanent Redirect : ")))))))+msg,
+            data
+        })
+    }
+}
+
+/**
+ * Sends a 3xx redirection response to the client.
+ * This function is an alias for sendRedirectionResponse, maintaining compatibility.
+ *
+ * @param res - Express Response object used to send the HTTP response.
+ * @param statusCode - The HTTP status code for redirection (300, 301, 302, 303, 304, 307, 308).
+ * @param msg - A custom message to append to the status description.
+ * @param data - Optional data to include in the response body (object or array).
+ *
+ * @returns void
+ *
+ * @example
+ * send3xxRedirectionResponse(res, 302, "Resource found at a different URI.", { url: "https://example.com" });
+ */
+
+function send3xxRedirectionResponse(res:Response , statusCode:300|301|302|303|304|307|308, msg:string, data?:object|[] ):void{
+
+    if(!data){
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===300?"Multiple Choices : ":(statusCode===301?"Moved Permanently : ":(statusCode===302?"Found : ":(statusCode===303?"See Other : ":(statusCode===304?"Not Modified : ":(statusCode===307?"Temporary Redirect : ":(statusCode===308&&"Parmanent Redirect : ")))))))+msg,
+        })
+    }else{
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===300?"Multiple Choices : ":(statusCode===301?"Moved Permanently : ":(statusCode===302?"Found : ":(statusCode===303?"See Other : ":(statusCode===304?"Not Modified : ":(statusCode===307?"Temporary Redirect : ":(statusCode===308&&"Parmanent Redirect : ")))))))+msg,
+            data
+        })
+    }
+}
+
+/**
+ * Sends a client error response with a specified HTTP status code and message.
+ *
+ * @param res - The Express `Response` object.
+ * @param statusCode - The HTTP status code (4xx) to send.
+ *  - 400: Bad Request
+ *  - 401: Unauthorized
+ *  - 403: Forbidden
+ *  - 404: Not Found
+ *  - 405: Method Not Allowed
+ *  - 406: Not Acceptable
+ *  - 408: Request Timeout
+ *  - 409: Conflict
+ *  - 410: Gone
+ *  - 411: Length Required
+ *  - 412: Precondition Failed
+ *  - 413: Payload Too Large
+ *  - 414: URI Too Long
+ *  - 415: Unsupported Media Type
+ *  - 429: Too Many Requests
+ * @param msg - The message to include in the response, appended to the status description.
+ * @param data - Optional additional data to include in the response (can be an object or array).
+ */
+function sendClientErrorResponse(res:Response , statusCode:400|401|403|404|405|406|408|409|410|411|412|413|414|415|429, msg:string, data?:object|[] ):void{
+
+    if(!data){
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===400?"Bad Request : ":(statusCode===401?"Unauthorized : ":(statusCode===403?"Forbidden : ":(statusCode===404?"Not Found : ":(statusCode===405?"Method Not Allowed : ":(statusCode===406?"Not Acceptable : ":(statusCode===408?"Request Timeout : ":(statusCode===409?"Conflict : ":(statusCode===410?"Gone : ":(statusCode===411?"Length Required : ":(statusCode===412?"Procondition Failed : ":(statusCode===413?"Payload To Large : ":(statusCode===414?"URI To Long : ":(statusCode===415?"Unsupported Media Type : ":(statusCode===429&&"To Many Requests : ")))))))))))))))+msg,
+        })
+    }else{
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===400?"Bad Request : ":(statusCode===401?"Unauthorized : ":(statusCode===403?"Forbidden : ":(statusCode===404?"Not Found : ":(statusCode===405?"Method Not Allowed : ":(statusCode===406?"Not Acceptable : ":(statusCode===408?"Request Timeout : ":(statusCode===409?"Conflict : ":(statusCode===410?"Gone : ":(statusCode===411?"Length Required : ":(statusCode===412?"Procondition Failed : ":(statusCode===413?"Payload To Large : ":(statusCode===414?"URI To Long : ":(statusCode===415?"Unsupported Media Type : ":(statusCode===429&&"To Many Requests : ")))))))))))))))+msg,
+            data
+        })
+    }
+}
+
+/**
+ * Sends a 4xx client error response with a specified HTTP status code and message.
+ *
+ * @param res - The Express `Response` object.
+ * @param statusCode - The HTTP status code (4xx) to send.
+ *  - 400: Bad Request
+ *  - 401: Unauthorized
+ *  - 403: Forbidden
+ *  - 404: Not Found
+ *  - 405: Method Not Allowed
+ *  - 406: Not Acceptable
+ *  - 408: Request Timeout
+ *  - 409: Conflict
+ *  - 410: Gone
+ *  - 411: Length Required
+ *  - 412: Precondition Failed
+ *  - 413: Payload Too Large
+ *  - 414: URI Too Long
+ *  - 415: Unsupported Media Type
+ *  - 429: Too Many Requests
+ * @param msg - The message to include in the response, appended to the status description.
+ * @param data - Optional additional data to include in the response (can be an object or array).
+ */
+function send4xxClientErrorResponse(res:Response , statusCode:400|401|403|404|405|406|408|409|410|411|412|413|414|415|429, msg:string, data?:object|[] ):void{
+
+    if(!data){
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===400?"Bad Request : ":(statusCode===401?"Unauthorized : ":(statusCode===403?"Forbidden : ":(statusCode===404?"Not Found : ":(statusCode===405?"Method Not Allowed : ":(statusCode===406?"Not Acceptable : ":(statusCode===408?"Request Timeout : ":(statusCode===409?"Conflict : ":(statusCode===410?"Gone : ":(statusCode===411?"Length Required : ":(statusCode===412?"Procondition Failed : ":(statusCode===413?"Payload To Large : ":(statusCode===414?"URI To Long : ":(statusCode===415?"Unsupported Media Type : ":(statusCode===429&&"To Many Requests : ")))))))))))))))+msg,
+        })
+    }else{
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===400?"Bad Request : ":(statusCode===401?"Unauthorized : ":(statusCode===403?"Forbidden : ":(statusCode===404?"Not Found : ":(statusCode===405?"Method Not Allowed : ":(statusCode===406?"Not Acceptable : ":(statusCode===408?"Request Timeout : ":(statusCode===409?"Conflict : ":(statusCode===410?"Gone : ":(statusCode===411?"Length Required : ":(statusCode===412?"Procondition Failed : ":(statusCode===413?"Payload To Large : ":(statusCode===414?"URI To Long : ":(statusCode===415?"Unsupported Media Type : ":(statusCode===429&&"To Many Requests : ")))))))))))))))+msg,
+            data
+        })
+    }
+}
+
+/**
+ * Sends a server error response with the appropriate HTTP status code and message.
+ * 
+ * @param res - The Express response object.
+ * @param statusCode - The HTTP status code (500, 501, 502, 503, 504, 505).
+ *   - 500: Internal Server Error
+ *   - 501: Not Implemented
+ *   - 502: Bad Gateway
+ *   - 503: Service Unavailable
+ *   - 504: Gateway Timeout
+ *   - 505: HTTP Version Not Supported
+ * @param msg - A custom message to include in the response.
+ * @param data - Optional additional data to include in the response (object or array).
+ * 
+ * @returns void
+ */
+function sendServerErrorResponse(res:Response , statusCode:500|501|502|503|504|505, msg:string, data?:object|[] ):void{
+
+    if(!data){
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===500?"Internal Server Error : ":(statusCode===501?"Not Implemented : ":(statusCode===502?"Bad Gateway : ":(statusCode===503?"Service unavailable : ":(statusCode===504?"Gateway Timeout : ":(statusCode===505&&"HTTP Version Not Supported : "))))))+msg,
+        })
+    }else{
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===500?"Internal Server Error : ":(statusCode===501?"Not Implemented : ":(statusCode===502?"Bad Gateway : ":(statusCode===503?"Service unavailable : ":(statusCode===504?"Gateway Timeout : ":(statusCode===505&&"HTTP Version Not Supported : "))))))+msg,
+            data
+        })
+    }
+}
+
+/**
+ * Sends a 5xx server error response with the appropriate HTTP status code and message.
+ * 
+ * @param res - The Express response object.
+ * @param statusCode - The HTTP status code (500, 501, 502, 503, 504, 505).
+ *   - 500: Internal Server Error
+ *   - 501: Not Implemented
+ *   - 502: Bad Gateway
+ *   - 503: Service Unavailable
+ *   - 504: Gateway Timeout
+ *   - 505: HTTP Version Not Supported
+ * @param msg - A custom message to include in the response.
+ * @param data - Optional additional data to include in the response (object or array).
+ * 
+ * @returns void
+ */
+function send5xxServerErrorResponse(res:Response , statusCode:500|501|502|503|504|505, msg:string, data?:object|[] ):void{
+
+    if(!data){
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===500?"Internal Server Error : ":(statusCode===501?"Not Implemented : ":(statusCode===502?"Bad Gateway : ":(statusCode===503?"Service unavailable : ":(statusCode===504?"Gateway Timeout : ":(statusCode===505&&"HTTP Version Not Supported : "))))))+msg,
+        })
+    }else{
+        res.status(statusCode).json({
+            success:true,
+            msg:(statusCode===500?"Internal Server Error : ":(statusCode===501?"Not Implemented : ":(statusCode===502?"Bad Gateway : ":(statusCode===503?"Service unavailable : ":(statusCode===504?"Gateway Timeout : ":(statusCode===505&&"HTTP Version Not Supported : "))))))+msg,
+            data
+        })
+    }
+}
+
+/**
+ * Sends an error message response to the client with the specified status code and message.
+ *
+ * @param res - The Express response object used to send the response.
+ * @param statusCode - The HTTP status code (500 for "Internal Server Error", 503 for "Service Unavailable").
+ * @param msg - The error message to include in the response.
+ *
+ * @remarks
+ * - When statusCode is 500, the message prefix will be "Internal Server Error :".
+ * - When statusCode is 503, the message prefix will be "Service unavailable :".
+ *
+ * @example
+ * sendErrorMsgResponse(res, 500, "Database connection failed");
+ * // Sends a response: { success: false, msg: "Internal Server Error : Database connection failed" }
+ *
+ * sendErrorMsgResponse(res, 503, "Server under maintenance");
+ * // Sends a response: { success: false, msg: "Service unavailable : Server under maintenance" }
+ */
+function sendErrorMsgResponse(res:Response,statusCode:500|503, msg:string):void{
     res.status(statusCode).json({
-        success,
+        success:false,
+        msg:(statusCode===500?"Internal Server Error :":(statusCode===503&&"Service unavailable : "))
+    });
+}
+
+
+/**
+ * Sends a standardized error response with optional data in case of a server error.
+ *
+ * @param res - Express Response object used to send the HTTP response.
+ * @param msg - A descriptive error message to be included in the response.
+ * @param data - Optional. Additional data related to the error. Can be an object, array, or an Error instance.
+ *
+ * @statusCode 500 - Internal Server Error
+ * @message The response will include the provided error message and optional data.
+ *
+ * @example
+ * // Sending a simple error message
+ * sendCatchResponse(res, 'An unexpected error occurred.');
+ *
+ * @example
+ * // Sending an error message with additional data
+ * sendCatchResponse(res, 'Failed to process request', { details: 'Invalid ID' });
+ *
+ * @example
+ * // Sending an error message with an Error instance
+ * sendCatchResponse(res, 'Error while fetching data', new Error('Database connection failed'));
+ */
+function sendCatchResponse(res:Response,msg:string,data?:object|[]|Error):void{
+   if(!data){
+    res.status(500).json({
+        success:false,
+        msg
+    });
+   }else{
+    res.status(500).json({
+        success:false,
         msg,
         data
     });
+   }
 }
+// -------------------------------------------------------------------- \\
+//                            End Block
+// -------------------------------------------------------------------- \\
 
 
 
-/**
- * Error handler function to handle errors and send appropriate responses.
+// -------------------------------------------------------------------- \\
+//                          Old Methods Block
+// -------------------------------------------------------------------- \\
 
- * @param err The error object.
- * @param res The response object.
- * @param statusCode The HTTP status code to send in the response.
- * @param msg The error message to send in the response.
-
- * This function logs the error stack to the console, validates the `statusCode` and `msg` parameters, and sends a JSON response with a `success` flag set to `false`, the specified `msg`, and the error object as `data`.
-
- * @example
- * ```typescript
- * import { errorHandler } from './errorHandler';
-
- * app.use((err, req, res, next) => {
- *     errorHandler(err, res, 500, 'Internal Server Error');
- * });
- * ```
- */
-function errorHandler(err: Error, res: Response, statusCode: number, msg: string) {
-    console.error(err.stack);
-
-    if (typeof statusCode !== 'number') {
-        throw new TypeError('statusCode must be a number');
-    }
-    if (typeof msg !== 'string') {
-        throw new TypeError('msg must be a string');
-    }
-
-    res.status(statusCode).json({
-        success: false,
-        msg: msg,
-        data: err
-    });
-}
-
-/**
- * Configures the Express app to parse incoming requests with JSON and URL-encoded payloads.
- * 
- * @param {express app} app - The Express application instance.
- * @param {express} express - The Express library, used to enable middleware for parsing.
- * 
- * app.use(express.json()) - Parses incoming requests with JSON payloads (application/json).
- * app.use(express.urlencoded({ extended: false })) - Parses incoming requests with URL-encoded payloads 
- * (application/x-www-form-urlencoded) where the extended option is set to false, meaning that the querystring library 
- * will be used for parsing instead of the qs library, limiting nested object support.
- */
-function setExpressUrlendodedAndJson(app:any,express:any){
-    // parse requests of content-type - application/json
-    // Middleware to parse requests with JSON payloads
-    app.use(express.json());
-
-    // Middleware to parse requests with URL-encoded payloads
-    // extended: false means only simple key-value pairs can be parsed (no nested objects)
-    app.use(express.urlencoded({extended:false}));
-}
 
 
 /**
@@ -191,9 +521,18 @@ function authorizeRole(role: string): (req: Request, res: Response, next: NextFu
   }
 
 export {
-    sendResponse,
-    errorHandler,
-    setExpressUrlendodedAndJson,
+    send1xxInformationalResponse,
+    sendInformationalResponse,
+    send2xxSuccessResponse,
+    sendSuccessResponse,
+    send3xxRedirectionResponse,
+    sendRedirectionResponse,
+    send4xxClientErrorResponse,
+    sendClientErrorResponse,
+    send5xxServerErrorResponse,
+    sendServerErrorResponse,
+    sendErrorMsgResponse,
+    sendCatchResponse,
     setCors,
     logRequest,
     logError,
