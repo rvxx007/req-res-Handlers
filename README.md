@@ -2,7 +2,7 @@
 ![Logo](https://github.com/rvxx007/req-res-Handlers/blob/main/public/poster.jpeg)
 
 
-# <img src="https://github.com/rvxx007/req-res-Handlers/blob/main/public/logo.png" width="60" height="60"> req-res-handlers 📦 (Handle Express Response & Utility Functions)
+# <img src="https://github.com/rvxx007/req-res-Handlers/blob/main/public/logov1.png" width="100%" height="100%"> 📦 (Handle Express Response & Utility Functions)
 
 `req-res-handlers` is a versatile utility package designed to simplify the handling of HTTP requests and responses in Express.js applications. It provides a suite of functions that streamline common tasks, improve error handling, and configure middleware, making it easier for developers to create robust and maintainable server applications.
 
@@ -12,20 +12,20 @@ This package includes utility functions for managing HTTP responses with various
 
 ## Table of Contents 📚
 
-- [Installation](#installation)
-- [Usage](#usage)
+- [Installation]
+- [Usage]
   - [Sending Informational Responses (1xx)](#sending-informational-responses-1xx)
   - [Sending Success Responses (2xx)](#sending-success-responses-2xx)
   - [Sending Redirection Responses (3xx)](#sending-redirection-responses-3xx)
   - [Sending Client Error Responses (4xx)](#sending-client-error-responses-4xx)
   - [Sending Server Error Responses (5xx)](#sending-server-error-responses-5xx)
   - [Additional Utilities](#additional-utilities)
-- [Middleware](#middleware)
-  - [Logging](#logging)
-  - [CORS](#cors)
-  - [Role Authorization](#role-authorization)
-  - [Pagination](#pagination)
-- [Example Code](#example-code)
+- [Middleware]
+  - [Logging]
+  - [CORS]
+  - [Role Authorization]
+  - [Pagination]
+- [Example Code]
 
 ---
 
