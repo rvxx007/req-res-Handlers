@@ -12,20 +12,21 @@ This package includes utility functions for managing HTTP responses with various
 
 ## Table of Contents 📚
 
-- [Installation]
-- [Usage]
+- Installation
+- StatusCodes & Messages
+- Usage
   - [Sending Informational Responses (1xx)](#sending-informational-responses-1xx)
   - [Sending Success Responses (2xx)](#sending-success-responses-2xx)
   - [Sending Redirection Responses (3xx)](#sending-redirection-responses-3xx)
   - [Sending Client Error Responses (4xx)](#sending-client-error-responses-4xx)
   - [Sending Server Error Responses (5xx)](#sending-server-error-responses-5xx)
   - [Additional Utilities](#additional-utilities)
-- [Middleware]
-  - [Logging]
-  - [CORS]
-  - [Role Authorization]
-  - [Pagination]
-- [Example Code]
+- Middleware
+  - Logging
+  - CORS
+  - Role Authorization
+  - Pagination
+- Example Code
 
 ---
 
@@ -37,6 +38,52 @@ To install `req-res-handlers`, run the following command:
 npm install req-res-handlers
 ```
 
+---
+## StatusCodes & Messages 📜
+
+- Informational Responses (1xx)
+  - **100 Continue**: The server has received the request headers and the client should proceed to send the request body.
+  - **101 Switching Protocols**: The requester has asked the server to switch protocols.
+  - **102 Processing**: The server has received and is processing the request, but no response is available yet.
+- Success (2xx)
+  - **200 OK**: The request has succeeded.
+  - **201 Created**: The request has been fulfilled and has resulted in one or more new resources being created.
+  - **202 Accepted**: The request has been accepted for processing, but the processing has not been completed.
+  - **203 Non-Authoritative Information**: The request was successful but the enclosed payload has been modified.
+  - **204 No Content**: The server successfully processed the request and is not returning any content.
+  - **205 Reset Content**: The server successfully processed the request, but is not returning any content, and requires the requester to reset the document view.
+  - **206 Partial Content**: The server is delivering only part of the resource due to a range header sent by the client.
+- Redirection (3xx)
+  - **300 Multiple Choices**: The request has more than one possible response.
+  - **301 Moved Permanently**: The URL of the requested resource has been changed permanently.
+  - **302 Found**: The URI of the requested resource has been changed temporarily.
+  - **303 See Other**: The response to the request can be found under another URI.
+  - **304 Not Modified**: The resource has not been modified since the version specified by the request headers.
+  - **307 Temporary Redirect**: The requested resource resides temporarily under a different URI.
+  - **308 Permanent Redirect**: The request and all future requests should be repeated using another URI.
+- Client Errors (4xx)
+  - **400 Bad Request**: The server could not understand the request due to invalid syntax.
+  - **401 Unauthorized**: The client must authenticate itself to get the requested response.
+  - **403 Forbidden**: The client does not have access rights to the content.
+  - **404 Not Found**: The server can not find the requested resource.
+  - **405 Method Not Allowed**: The request method is known by the server but has been disabled and cannot be used.
+  - **406 Not Acceptable**: The server cannot produce a response matching the list of acceptable values.
+  - **408 Request Timeout**: The server timed out waiting for the request.
+  - **409 Conflict**: The request could not be completed due to a conflict with the current state of the target resource.
+  - **410 Gone**: The requested resource is no longer available and will not be available again.
+  - **411 Length Required**: The server refuses to accept the request without a defined Content-Length.
+  - **412 Precondition Failed**: The client has indicated preconditions that the server does not meet.
+  - **413 Payload Too Large**: The request entity is larger than limits defined by the server.
+  - **414 URI Too Long**: The URI requested by the client is longer than the server is willing to interpret.
+  - **415 Unsupported Media Type**: The media format of the requested data is not supported by the server.
+  - **429 Too Many Requests**: The user has sent too many requests in a given amount of time.
+- Server Errors (5xx)
+  - **500 Internal Server Error**: The server has encountered a situation it doesn't know how to handle.
+  - **501 Not Implemented**: The request method is not supported by the server and cannot be handled.
+  - **502 Bad Gateway**: The server, while acting as a gateway or proxy, received an invalid response.
+  - **503 Service Unavailable**: The server is not ready to handle the request.
+  - **504 Gateway Timeout**: The server is acting as a gateway and cannot get a response in time.
+  - **505 HTTP Version Not Supported**: The HTTP version used in the request is not supported by the server.
 ---
 
 ## Usage 📜
