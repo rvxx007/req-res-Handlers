@@ -1,133 +1,254 @@
 
 ![Logo](https://github.com/rvxx007/req-res-Handlers/blob/main/public/poster.jpeg)
-# <img src="https://github.com/rvxx007/req-res-Handlers/blob/main/public/logo.png" width="20" height="20"> req-res-Handlers
+![Logo]<img src="https://github.com/rvxx007/req-res-Handlers/blob/main/public/logo.png" width="60" height="60"> req-res-Handlers
 
+# req-res-handlers 📦 (Handle Express Response & Utility Functions)
 
-# req-res-Handlers - Express Response Utility Functions
-**req-res-Handlers** is a versatile npm package designed to simplify the handling of HTTP requests and responses in Express applications. It provides a suite of utility functions that streamline common tasks, enhance error handling, and configure essential middleware, enabling developers to focus on building robust server applications.
-This repository provides a collection of utility functions to manage HTTP responses in an Express.js application. These functions cover various response categories such as informational, success, redirection, client errors, server errors, and more. Each function aims to standardize response formatting, improve code maintainability, and enhance readability for better handling of different types of HTTP status codes.
+`req-res-handlers` is a versatile utility package designed to simplify the handling of HTTP requests and responses in Express.js applications. It provides a suite of functions that streamline common tasks, improve error handling, and configure middleware, making it easier for developers to create robust and maintainable server applications.
 
-## Table of Contents
+This package includes utility functions for managing HTTP responses with various status codes, ranging from informational responses (1xx) to success responses (2xx), redirections (3xx), client errors (4xx), and server errors (5xx). Each function ensures standardized formatting for better readability and easier debugging.
+
+---
+
+## Table of Contents 📚
+
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Informational Responses](#informational-responses)
-  - [Success Responses](#success-responses)
-  - [Redirection Responses](#redirection-responses)
-  - [Client Error Responses](#client-error-responses)
-  - [Server Error Responses](#server-error-responses)
-- [Additional Features](#additional-features)
-- [Contributing](#contributing)
-- [License](#license)
+  - [Sending Informational Responses (1xx)](#sending-informational-responses-1xx)
+  - [Sending Success Responses (2xx)](#sending-success-responses-2xx)
+  - [Sending Redirection Responses (3xx)](#sending-redirection-responses-3xx)
+  - [Sending Client Error Responses (4xx)](#sending-client-error-responses-4xx)
+  - [Sending Server Error Responses (5xx)](#sending-server-error-responses-5xx)
+  - [Additional Utilities](#additional-utilities)
+- [Middleware](#middleware)
+  - [Logging](#logging)
+  - [CORS](#cors)
+  - [Role Authorization](#role-authorization)
+  - [Pagination](#pagination)
+- [Example Code](#example-code)
 
-## Installation
+---
 
-To use these response utility functions in your project, follow these steps:
+## Installation ⚡
 
-1. Clone or download the repository.
-2. Install the required dependencies by running:
-   ```bash
-   npm install express
-   ```
+To install `req-res-handlers`, run the following command:
 
-3. Import the functions in your Express application:
-   ```typescript
-   import { sendInformationalResponse, sendSuccessResponse, sendClientErrorResponse, sendServerErrorResponse, setCors, logRequest } from './responseUtils';
-   ```
-
-## Usage
-
-### Informational Responses (1xx)
-
-These functions send HTTP responses with informational status codes (100, 101, 102). You can include optional data with the response.
-
-#### `sendInformationalResponse(res, statusCode, msg, data?)`
-Sends an informational HTTP response with an optional data payload.
-
-```typescript
-sendInformationalResponse(res, 100, "Continue processing", { extraData: "some data" });
+```bash
+npm install req-res-handlers
 ```
 
-### Success Responses (2xx)
+---
 
-These functions send HTTP responses with success status codes (200, 201, 202, etc.). You can include optional data with the response.
+## Usage 📜
 
-#### `sendSuccessResponse(res, statusCode, msg, data?)`
-Sends a standardized success response with a 2xx status code.
+### Sending Informational Responses (1xx)
 
-```typescript
-sendSuccessResponse(res, 200, "Request succeeded", { userId: 123 });
-```
-
-### Redirection Responses (3xx)
-
-These functions send HTTP responses for redirection status codes (300, 301, 302, etc.).
-
-#### `sendRedirectionResponse(res, statusCode, msg, data?)`
-Sends a redirection response with a 3xx status code.
+Use these functions to send informational responses, such as "100 Continue", "101 Switching Protocols", or "102 Processing". These are typically used for interim responses and don't carry much content.
 
 ```typescript
-sendRedirectionResponse(res, 301, "Resource moved", { newUrl: "https://newlocation.com" });
+import { sendInformationalResponse } from "req-res-handlers";
+
+app.get('/status', (req, res) => {
+  sendInformationalResponse(res, 100, "Continue", { data: "Some information" });
+  // OR
+  send1xxInformationalResponse(res, 100, "Continue", { data: "Some information" });
+});
 ```
 
-### Client Error Responses (4xx)
+### Sending Success Responses (2xx)
 
-These functions send HTTP responses with client error status codes (400, 401, 403, etc.).
-
-#### `sendClientErrorResponse(res, statusCode, msg, data?)`
-Sends a client error response with a specified 4xx status code.
+These functions handle success responses like "200 OK", "201 Created", and "204 No Content". Use these to send the appropriate HTTP status code along with a message and optional data.
 
 ```typescript
-sendClientErrorResponse(res, 404, "Resource not found", { resource: "user" });
+import { sendSuccessResponse } from "req-res-handlers";
+
+app.get('/data', (req, res) => {
+  sendSuccessResponse(res, 200, "Data fetched successfully", { name: "John Doe" });
+  // OR
+  send2xxSuccessResponse(res, 200, "Data fetched successfully", { name: "John Doe" });
+});
 ```
 
-### Server Error Responses (5xx)
+### Sending Redirection Responses (3xx)
 
-These functions send HTTP responses with server error status codes (500, 502, 503, etc.).
-
-#### `sendServerErrorResponse(res, statusCode, msg, data?)`
-Sends a server error response with a specified 5xx status code.
+If you need to redirect the user, you can use these functions to send HTTP status codes like "301 Moved Permanently", "302 Found", or "307 Temporary Redirect".
 
 ```typescript
-sendServerErrorResponse(res, 500, "Internal server error", { error: "Database connection failed" });
+import { sendRedirectionResponse } from "req-res-handlers";
+
+app.get('/old-path', (req, res) => {
+  sendRedirectionResponse(res, 301, "Resource moved to new location", { url: "https://new-url.com" });
+  // OR
+  send3xxRedirectionResponse(res, 301, "Resource moved to new location", { url: "https://new-url.com" });
+});
 ```
 
-## Additional Features
+### Sending Client Error Responses (4xx)
 
-- **CORS Setup**: Use `setCors()` to configure CORS middleware for your Express app.
-  
-  ```typescript
-  setCors(app, cors, ['https://example.com'], ['GET', 'POST']);
-  ```
+For client-side errors, such as "400 Bad Request" or "404 Not Found", use these functions to send the appropriate error messages and status codes.
 
-- **Logging Requests**: Use `logRequest()` to log incoming requests.
+```typescript
+import { sendClientErrorResponse } from "req-res-handlers";
 
-  ```typescript
-  app.use(logRequest);
-  ```
+app.get('/user/:id', (req, res) => {
+  const user = getUserById(req.params.id);
+  if (!user) {
+    sendClientErrorResponse(res, 404, "User not found");
+    // OR
+    send4xxClientErrorResponse(res, 404, "User not found");
+  } else {
+    res.json(user);
+  }
+});
+```
 
-- **Error Handling Middleware**: Use `logError()` to log error details.
+### Sending Server Error Responses (5xx)
 
-  ```typescript
-  app.use(logError);
-  ```
+These functions help handle server-side errors such as "500 Internal Server Error" or "503 Service Unavailable". They are useful for communicating issues within your server.
 
-- **Pagination**: Use `paginate()` to paginate arrays of items.
+```typescript
+import { sendServerErrorResponse } from "req-res-handlers";
 
-  ```typescript
-  const items = [1, 2, 3, 4, 5];
-  const page1 = paginate(items, 1, 2);  // [1, 2]
-  ```
+app.get('/data', (req, res) => {
+  try {
+    fetchData();
+  } catch (error) {
+    sendServerErrorResponse(res, 500, "Failed to fetch data", { error: error.message });
+    // OR
+    send5xxServerErrorResponse(res, 500, "Failed to fetch data", { error: error.message });
+  }
+});
+```
 
-- **Role Authorization**: Use `authorizeRole()` to restrict access based on user roles.
+### Additional Utilities
 
-  ```typescript
-  const adminRoute = express.Router();
-  adminRoute.use(authorizeRole('admin'));
-  ```
+- **Error Message Response**: For simple error messages without detailed data:
+
+```typescript
+import { sendErrorMsgResponse } from "req-res-handlers";
+
+app.get('/error', (req, res) => {
+  sendErrorMsgResponse(res, 503, "Service is down for maintenance");
+});
+```
+
+- **Catch Response**: For catching unexpected errors and sending a generic response:
+
+```typescript
+import { sendCatchResponse } from "req-res-handlers";
+
+app.get('/error', (req, res) => {
+  try {
+    throw new Error("Something went wrong");
+  } catch (error) {
+    sendCatchResponse(res, "Unexpected error occurred", error);
+  }
+});
+```
+
+---
+
+## Middleware ⚙️
+
+### Logging 📊
+
+`logRequest` logs incoming HTTP requests with their corresponding responses, which can help with monitoring and debugging.
+
+```typescript
+import { logRequest } from "req-res-handlers";
+
+app.use(logRequest);
+```
+
+### CORS 🌍
+
+`setCors` configures CORS middleware to allow requests from specified origins with specified HTTP methods.
+
+```typescript
+import { setCors } from "req-res-handlers";
+import cors from "cors";
+
+setCors(app, cors, ["https://example.com"], ["GET", "POST"]);
+```
+
+### Role Authorization 🔐
+
+Ensure only users with the specified role can access a route.
+
+```typescript
+import { authorizeRole } from "req-res-handlers";
+
+app.get('/admin', authorizeRole("admin"), (req, res) => {
+  res.send("Admin dashboard");
+});
+```
+
+### Pagination 📄
+
+Use `paginate` to paginate an array of items (e.g., for displaying lists of data with pagination).
+
+```typescript
+import { paginate } from "req-res-handlers";
+
+const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const page1 = paginate(data, 1, 3); // [1, 2, 3]
+const page2 = paginate(data, 2, 3); // [4, 5, 6]
+```
+
+---
+
+## Example Code 💻
+
+Here’s an example of how you might use the package to set up an Express app with the provided functions:
+
+```typescript
+import express from 'express';
+import {
+  sendSuccessResponse,
+  sendClientErrorResponse,
+  sendServerErrorResponse,
+  logRequest,
+  setCors,
+  paginate
+} from 'req-res-handlers';
+
+const app = express();
+
+// Setup logging
+app.use(logRequest);
+
+// Setup CORS for specific origins
+setCors(app, require('cors'), ['https://example.com']);
+
+// Example endpoint
+app.get('/users', (req, res) => {
+  try {
+    const users = [/* Array of users */];
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 5;
+    const paginatedUsers = paginate(users, page, limit);
+    sendSuccessResponse(res, 200, 'Users fetched successfully', paginatedUsers);
+  } catch (error) {
+    sendServerErrorResponse(res, 500, 'Error fetching users');
+  }
+});
+
+// Example error handling
+app.get('/notfound', (req, res) => {
+  sendClientErrorResponse(res, 404, 'Resource not found');
+});
+
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});
+```
+
+---
 
 
 ## License
 
+`req-res-handlers` is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
 [MIT](https://choosealicense.com/licenses/mit/)
 
 
@@ -136,4 +257,4 @@ sendServerErrorResponse(res, 500, "Internal server error", { error: "Database co
 - <a style="display:flex; justify-content: center; align-items: center;" href="https://github.com/rvxx007"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" width="20" height="20"> @rvxx007</a>
 - <a style="display:flex; justify-content: center; align-items: center;" href="mailto:akashkawle0@gmail.com"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Gmail_Icon.png/512px-Gmail_Icon.png" width="20" height="20"> akashkawle0@gmail.com</a>
 - <a href="https://www.linkedin.com/in/akash-kawale-5a4393212/"><img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" width="20" height="20"> Akash Kawale</a>
-- <a href="https://www.instagram.com/akashkawle05/profilecard/?igsh=MWxnZ2VxZHFvMzNudw=="><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="20" height="20"> akashkawale05</a>
+- <a href="https://www.instagram.com/_._akash.kawale_._"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="20" height="20">_._akash.kawale_._</a>
