@@ -1,8 +1,8 @@
 
 ![Logo](https://github.com/rvxx007/req-res-Handlers/blob/main/public/poster.jpeg)
-![Logo]<img src="https://github.com/rvxx007/req-res-Handlers/blob/main/public/logo.png" width="60" height="60"> req-res-Handlers
 
-# req-res-handlers 📦 (Handle Express Response & Utility Functions)
+
+# <img src="https://github.com/rvxx007/req-res-Handlers/blob/main/public/logo.png" width="60" height="60"> req-res-handlers 📦 (Handle Express Response & Utility Functions)
 
 `req-res-handlers` is a versatile utility package designed to simplify the handling of HTTP requests and responses in Express.js applications. It provides a suite of functions that streamline common tasks, improve error handling, and configure middleware, making it easier for developers to create robust and maintainable server applications.
 
