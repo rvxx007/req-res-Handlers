@@ -1,6 +1,6 @@
 {
   "name": "req-res-handlers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "req-res-Handlers is a versatile npm package designed to simplify the handling of HTTP requests and responses in Express applications. It provides a suite of utility functions that streamline common tasks, enhance error handling, and configure essential middleware, enabling developers to focus on building robust server applications. This repository provides a collection of utility functions to manage HTTP responses in an Express.js application. These functions cover various response categories such as informational, success, redirection, client errors, server errors, and more. Each function aims to standardize response formatting, improve code maintainability, and enhance readability for better handling of different types of HTTP status codes.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
