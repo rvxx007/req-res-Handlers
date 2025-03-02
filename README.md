@@ -10,14 +10,14 @@ This package includes utility functions for managing HTTP responses with various
 
 ---
 
-## Notes
+## Notes 📚
 There is two types of Functions
 - NormalHandler function
 - SendStatusCodeHandler function
 
 ### **NormalHandler Function**
-when we use NormalHandler function to send response then it sends standard json response.
-which contain this kind of json structure.
+- When we want to send a standard json response, that time we use NormalHandler function to handle a response.
+- which contain this kind of json structure.
 ```json
 {
   "success":"true",
@@ -37,8 +37,8 @@ sendInformationalResponse(res, 100, "Continue", { data: "Some information" });
 ```
 
 ### **SendStatusCodeHandler Function**
-when we use NormalHandler function to send response then it sends standard json response.
-which contain this kind of json structure with statusCode. 
+- When we want to send a standard json response with statusCode in json, that time we use SendStatusCodeHandler function to handle a response.
+- which contain this kind of json structure with statusCode. 
 
 ```json
 {
