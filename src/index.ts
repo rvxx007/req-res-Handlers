@@ -62,11 +62,13 @@ function send1xxInformationalResponse(res:Response , statusCode:100|101|102, msg
     if(!data){
         res.status(statusCode).json({
             success:true,
+            statusCode,
             msg:(statusCode===100?"Continue : ":(statusCode===101?"Switching Protocols : ":(statusCode===102&&"Proccessing : ")))+msg,
         })
     }else{
         res.status(statusCode).json({
             success:true,
+            statusCode,
             msg:(statusCode===100?"Continue : ":(statusCode===101?"Switching Protocols : ":(statusCode===102&&"Proccessing : ")))+msg,
             data
         })
@@ -124,11 +126,13 @@ function send2xxSuccessResponse(res:Response , statusCode:200|201|202|203|204|20
     if(!data){
         res.status(statusCode).json({
             success:true,
+            statusCode,
             msg:(statusCode===200?"OK : ":(statusCode===201?"Created : ":(statusCode===202?"Accepted : ":(statusCode===203?"Non-Authoritative Information : ":(statusCode===204?"No Content : ":(statusCode===205?"Reset Content : ":(statusCode===206&&"Partial Content : ")))))))+msg,
         })
     }else{
         res.status(statusCode).json({
             success:true,
+            statusCode,
             msg:(statusCode===200?"OK : ":(statusCode===201?"Created : ":(statusCode===202?"Accepted : ":(statusCode===203?"Non-Authoritative Information : ":(statusCode===204?"No Content : ":(statusCode===205?"Reset Content : ":(statusCode===206&&"Partial Content : ")))))))+msg,
             data
         })
@@ -185,11 +189,13 @@ function send3xxRedirectionResponse(res:Response , statusCode:300|301|302|303|30
     if(!data){
         res.status(statusCode).json({
             success:true,
+            statusCode,
             msg:(statusCode===300?"Multiple Choices : ":(statusCode===301?"Moved Permanently : ":(statusCode===302?"Found : ":(statusCode===303?"See Other : ":(statusCode===304?"Not Modified : ":(statusCode===307?"Temporary Redirect : ":(statusCode===308&&"Parmanent Redirect : ")))))))+msg,
         })
     }else{
         res.status(statusCode).json({
             success:true,
+            statusCode,
             msg:(statusCode===300?"Multiple Choices : ":(statusCode===301?"Moved Permanently : ":(statusCode===302?"Found : ":(statusCode===303?"See Other : ":(statusCode===304?"Not Modified : ":(statusCode===307?"Temporary Redirect : ":(statusCode===308&&"Parmanent Redirect : ")))))))+msg,
             data
         })
@@ -263,11 +269,13 @@ function send4xxClientErrorResponse(res:Response , statusCode:400|401|403|404|40
     if(!data){
         res.status(statusCode).json({
             success:true,
+            statusCode,
             msg:(statusCode===400?"Bad Request : ":(statusCode===401?"Unauthorized : ":(statusCode===403?"Forbidden : ":(statusCode===404?"Not Found : ":(statusCode===405?"Method Not Allowed : ":(statusCode===406?"Not Acceptable : ":(statusCode===408?"Request Timeout : ":(statusCode===409?"Conflict : ":(statusCode===410?"Gone : ":(statusCode===411?"Length Required : ":(statusCode===412?"Procondition Failed : ":(statusCode===413?"Payload To Large : ":(statusCode===414?"URI To Long : ":(statusCode===415?"Unsupported Media Type : ":(statusCode===429&&"To Many Requests : ")))))))))))))))+msg,
         })
     }else{
         res.status(statusCode).json({
             success:true,
+            statusCode,
             msg:(statusCode===400?"Bad Request : ":(statusCode===401?"Unauthorized : ":(statusCode===403?"Forbidden : ":(statusCode===404?"Not Found : ":(statusCode===405?"Method Not Allowed : ":(statusCode===406?"Not Acceptable : ":(statusCode===408?"Request Timeout : ":(statusCode===409?"Conflict : ":(statusCode===410?"Gone : ":(statusCode===411?"Length Required : ":(statusCode===412?"Procondition Failed : ":(statusCode===413?"Payload To Large : ":(statusCode===414?"URI To Long : ":(statusCode===415?"Unsupported Media Type : ":(statusCode===429&&"To Many Requests : ")))))))))))))))+msg,
             data
         })
@@ -327,11 +335,13 @@ function send5xxServerErrorResponse(res:Response , statusCode:500|501|502|503|50
     if(!data){
         res.status(statusCode).json({
             success:true,
+            statusCode,
             msg:(statusCode===500?"Internal Server Error : ":(statusCode===501?"Not Implemented : ":(statusCode===502?"Bad Gateway : ":(statusCode===503?"Service unavailable : ":(statusCode===504?"Gateway Timeout : ":(statusCode===505&&"HTTP Version Not Supported : "))))))+msg,
         })
     }else{
         res.status(statusCode).json({
             success:true,
+            statusCode,
             msg:(statusCode===500?"Internal Server Error : ":(statusCode===501?"Not Implemented : ":(statusCode===502?"Bad Gateway : ":(statusCode===503?"Service unavailable : ":(statusCode===504?"Gateway Timeout : ":(statusCode===505&&"HTTP Version Not Supported : "))))))+msg,
             data
         })

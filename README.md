@@ -10,6 +10,58 @@ This package includes utility functions for managing HTTP responses with various
 
 ---
 
+## Notes
+There is two types of Functions
+- NormalHandler function
+- SendStatusCodeHandler function
+
+### **NormalHandler Function**
+when we use NormalHandler function to send response then it sends standard json response.
+which contain this kind of json structure.
+```json
+{
+  "success":"true",
+  "msg":"test",
+  "data":{
+    // ...data
+  }
+}
+```
+
+### Syntax & Example
+```javascript
+// Syntax
+// sendInformationalResponse(res, statusCode, message, data/object/array);
+// Example
+sendInformationalResponse(res, 100, "Continue", { data: "Some information" });
+```
+
+### **SendStatusCodeHandler Function**
+when we use NormalHandler function to send response then it sends standard json response.
+which contain this kind of json structure with statusCode. 
+
+```json
+{
+  "success":"true",
+  "statusCode":200,
+  "msg":"test",
+  "data":{
+    // ...data
+  }
+}
+```
+
+### Syntax & Example
+```javascript
+// Syntax
+// send1xxInformationalResponse(res, statusCode, message, data/object/array);
+
+// Example
+send1xxInformationalResponse(res, 100, "Continue", { data: "Some information" });
+```
+
+---
+
 ## Table of Contents 📚
 
 - Installation
