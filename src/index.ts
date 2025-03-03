@@ -454,7 +454,7 @@ const logRequest = (req: Request, res: Response, next: NextFunction)=> {
     const { method, originalUrl } = req;
     const timestamp = new Date().toISOString();
   
-    console.log(`[${timestamp}] - ${method} - ${originalUrl} - ${res.status}`);
+    console.log(`[${timestamp}] - ${method} - ${originalUrl}`);
     next();
 }
 
