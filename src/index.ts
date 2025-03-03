@@ -450,26 +450,13 @@ function setCors(app: any, cors: any, originUrls: string[], methods: string[] = 
  * @param res The outgoing HTTP response object.
  * @param next The next middleware function in the chain.
  */
-function logRequest(req: Request, res: Response, next: NextFunction) {
-    console.log(`${req.method} - ${req.url} - ${res.status}`);
+const logRequest = (req: Request, res: Response, next: NextFunction)=> {
+    const { method, originalUrl } = req;
+    const timestamp = new Date().toISOString();
+  
+    console.log(`[${timestamp}] - ${method} - ${originalUrl} - ${res.status}`);
     next();
 }
-
-
-/**
- * Logs an error to the console and passes it to the next error-handling middleware.
-
- * This function is typically used as an error-handling middleware in Express.js applications. It logs the error stack to the console for debugging purposes and then passes the error to the next middleware in the error-handling chain.
-
- * @param err The error object.
- * @param req The request object.
- * @param res The response object.
- * @param next The next middleware function.
- */
-function logError(err: Error, req: Request, res: Response, next: NextFunction) {
-    console.error(err.stack);
-    next(err);
-  }
 
 
 /**
@@ -545,7 +532,6 @@ export {
     sendCatchResponse,
     setCors,
     logRequest,
-    logError,
     authorizeRole,
     paginate,
     }
